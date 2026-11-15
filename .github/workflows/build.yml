@@ -18,13 +18,11 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: SDK Android
-        uses: android-actions/setup-android@v3
-
       - name: Plateforme 35 et Build Tools 35.0.2
         run: |
-          yes | sdkmanager --licenses > /dev/null || true
-          sdkmanager "platforms;android-35" "build-tools;35.0.2"
+          SDKM=$(ls -d "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager | head -1)
+          yes | "$SDKM" --licenses > /dev/null || true
+          "$SDKM" "platforms;android-35" "build-tools;35.0.2"
 
       - name: Gradle 8.9
         uses: gradle/actions/setup-gradle@v4
